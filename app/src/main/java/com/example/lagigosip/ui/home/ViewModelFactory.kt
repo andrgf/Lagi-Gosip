@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.lagigosip.data.NewsRepository
 import com.example.lagigosip.data.di.Injection
 import com.example.lagigosip.ui.bookmark.BookmarkViewModel
+import com.example.lagigosip.ui.search.SearchViewModel
 
 class ViewModelFactory private constructor(private val newsRepository: NewsRepository) :
 
@@ -17,6 +18,8 @@ class ViewModelFactory private constructor(private val newsRepository: NewsRepos
             return HomeViewModel(newsRepository) as T
         } else if (modelClass.isAssignableFrom(BookmarkViewModel::class.java)) {
             return BookmarkViewModel(newsRepository) as T
+        } else if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            return SearchViewModel(newsRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 import com.example.lagigosip.data.local.entity.NewsEntity
 import androidx.room.Query
-
 @Dao
 interface NewsDao {
     @Query("SELECT * FROM news ORDER BY publishedAt DESC")
@@ -17,14 +16,14 @@ interface NewsDao {
     fun getBookmarkedNews(): LiveData<List<NewsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertNews(news: List<NewsEntity>)
+    suspend fun insertNews(news: List<NewsEntity>)
 
     @Update
-    fun updateNews(news: NewsEntity)
+    suspend fun updateNews(news: NewsEntity)
 
     @Query("DELETE FROM news WHERE bookmarked = 0")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT EXISTS(SELECT * FROM news WHERE title = :title AND bookmarked = 1)")
-    fun isNewsBookmarked(title: String): Boolean
+    suspend fun isNewsBookmarked(title: String): Boolean
 }

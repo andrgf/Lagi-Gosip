@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.lagigosip.data.NewsRepository
 import com.example.lagigosip.data.local.room.NewsDb
 import com.example.lagigosip.data.remote.retrofit.ApiConfig
-import com.example.lagigosip.utils.AppExecutors
 
 object Injection {
 
@@ -13,7 +12,6 @@ object Injection {
         val apiService = ApiConfig.getApiService()
         val database = NewsDb.getInstance(context)
         val dao = database.newsDao()
-        val appExecutors = AppExecutors()
-        return NewsRepository.getInstance(apiService, dao, appExecutors)
+        return NewsRepository.getInstance(apiService, dao)
     }
 }

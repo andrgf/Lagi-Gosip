@@ -16,12 +16,6 @@ import com.example.lagigosip.utils.DateFormatter
 
 class NewsAdapter(private val onBookmarkClick: (NewsEntity) -> Unit) : ListAdapter <NewsEntity, NewsAdapter.MyViewHolder>(DiFF_CALLBACK){
 
-    private var onItemClickCallback: OnItemClickCallback? = null
-
-    fun setOnItemClickedCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
@@ -42,17 +36,13 @@ class NewsAdapter(private val onBookmarkClick: (NewsEntity) -> Unit) : ListAdapt
         }
     }
 
-    inner class MyViewHolder(val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: NewsEntity) {
             binding.tvTitle.text = news.title
             binding.tvDate.text = DateFormatter.formatDate(news.publishedAt)
             Glide.with(binding.root)
                 .load(news.urlToImage)
                 .into(binding.ivNews)
-
-            binding.root.setOnClickListener {
-                onItemClickCallback?.onItemClicked(news)
-            }
             itemView.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(news.url)
@@ -60,10 +50,6 @@ class NewsAdapter(private val onBookmarkClick: (NewsEntity) -> Unit) : ListAdapt
             }
         }
 
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClicked(data: NewsEntity)
     }
 
     companion object {
@@ -74,7 +60,7 @@ class NewsAdapter(private val onBookmarkClick: (NewsEntity) -> Unit) : ListAdapt
                 }
 
                 override fun areContentsTheSame(oldItem: NewsEntity, newItem: NewsEntity): Boolean {
-                    return oldItem == newItem
+                    return oldItem.title == newItem.title
                 }
 
             }

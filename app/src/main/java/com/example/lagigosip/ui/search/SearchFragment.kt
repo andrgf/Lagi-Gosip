@@ -5,13 +5,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lagigosip.databinding.FragmentSearchBinding
 import com.example.lagigosip.ui.adapter.SearchAdapter
-import com.example.lagigosip.ui.home.ViewModelFactory
 
 class SearchFragment : Fragment() {
 
@@ -30,12 +26,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireContext())
-        val viewModel: SearchViewModel by viewModels {
-            factory
-        }
-
 
     }
 

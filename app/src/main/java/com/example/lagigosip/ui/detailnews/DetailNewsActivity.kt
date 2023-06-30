@@ -33,7 +33,7 @@ class DetailNewsActivity : AppCompatActivity() {
                 is com.example.lagigosip.data.Result.Error -> {
                     Toast.makeText(this, "eror", Toast.LENGTH_SHORT).show()
                 }
-                is com.example.lagigosip.data.Result.Succes -> {
+                is com.example.lagigosip.data.Result.Success -> {
                     val data = result.data
                     binding.tvContent.text = data.toString()
                 }

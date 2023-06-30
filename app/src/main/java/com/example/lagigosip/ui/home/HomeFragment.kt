@@ -1,6 +1,5 @@
 package com.example.lagigosip.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lagigosip.data.local.entity.NewsEntity
 import com.example.lagigosip.databinding.FragmentHomeBinding
 import com.example.lagigosip.ui.adapter.NewsAdapter
-import com.example.lagigosip.ui.detailnews.DetailNewsActivity
 
 class HomeFragment : Fragment() {
 
@@ -56,17 +53,18 @@ class HomeFragment : Fragment() {
                 is com.example.lagigosip.data.Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
-                is com.example.lagigosip.data.Result.Succes -> {
+                is com.example.lagigosip.data.Result.Success -> {
                     binding.progressBar.visibility = View.GONE
                     val newsData = result.data
                     newsAdapter.submitList(newsData)
                 }
                 is com.example.lagigosip.data.Result.Error -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.VISIBLE
                     Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
     }
 
     override fun onDestroyView() {

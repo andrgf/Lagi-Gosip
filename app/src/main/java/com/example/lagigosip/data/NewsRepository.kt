@@ -6,7 +6,6 @@ import com.example.lagigosip.BuildConfig
 import com.example.lagigosip.data.Result
 import com.example.lagigosip.data.local.entity.NewsEntity
 import com.example.lagigosip.data.local.room.NewsDao
-import com.example.lagigosip.data.remote.response.ArticlesItem
 import com.example.lagigosip.data.remote.retrofit.ApiService
 
 class NewsRepository private constructor(
@@ -14,8 +13,8 @@ class NewsRepository private constructor(
     private val newDao: NewsDao,
 ){
 
-    fun getHeadlineNews() : LiveData<com.example.lagigosip.data.Result<List<NewsEntity>>> = liveData {
-        emit(com.example.lagigosip.data.Result.Loading)
+    fun getHeadlineNews() : LiveData<Result<List<NewsEntity>>> = liveData {
+        emit(Result.Loading)
         try {
             val response = apiService.getNews(BuildConfig.API_KEY)
             val articles = response.articles
@@ -33,9 +32,9 @@ class NewsRepository private constructor(
             newDao.insertNews(newsList)
         } catch (e: java.lang.Exception) {
             Log.d("NewsRepository", "getNews: ${e.message.toString()}")
-            emit(com.example.lagigosip.data.Result.Error(e.message.toString()))
+            emit(Result.Error(e.message.toString()))
         }
-        val localData: LiveData<com.example.lagigosip.data.Result<List<NewsEntity>>> = newDao.getNews().map { com.example.lagigosip.data.Result.Succes(it) }
+        val localData: LiveData<Result<List<NewsEntity>>> = newDao.getNews().map {Result.Success(it) }
         emitSource(localData)
     }
 
